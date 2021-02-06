@@ -1,0 +1,115 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{relsize}
+\usepackage{geometry}
+
+\geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+}
+
+\title{Homework 1\\[0.2em]\smaller{}CSC 445-01: Theory of Computation}
+\author{Matthew Mabrey, Luke Kurlandski}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Question I}
+
+\section*{Question II}
+
+\subsection*{a}
+
+\subsection*{b}
+
+\subsection*{c}
+
+\section*{Question III}
+We will prove
+$$
+P(n) \colon \sum^n_{i=1} \frac{1}{i(i+1)} = \frac{n}{n+1} \;\; \biggr | \;\; n \geq 0, n \in Z
+$$
+Base case:
+\begin{eqnarray*}
+P(0) &\colon& \sum^n_{i=1} \frac{1}{i(i+1)} = \frac{n}{n+1} \\
+&\colon& \sum^0_{i=1} \frac{1}{i(i+1)} = \frac{0}{0+1} \\
+&\colon& 0 = 0 \\
+&\colon& \textrm{TRUE}
+\end{eqnarray*}
+Inductive Hypothesis:
+$$
+P(k) \colon \sum^k_{i=1} \frac{1}{i(i+1)} = \frac{k}{k+1} \;\; \biggr | \;\; k \geq 0, k \in Z
+$$
+Induction:
+\begin{eqnarray*}
+P(k+1) \colon \;\; \frac{k+1}{k+2} &=& \sum^{k+1}_{i=1} \frac{1}{i(i+1)}  \\
+&=& \sum^k_{i=1} \frac{1}{i(i+1)} + \frac{1}{(k+1)((k+1)+1)} \\
+&=& \frac{k}{k+1} + \frac{1}{(k+1)(k+2)} \\ 
+&=& \frac{k(k+2) + 1}{(k+1)(k+2)} \\ 
+&=& \frac{(k+1)^2}{(k+1)(k+2)} \\
+\frac{k+1}{(k+2)} &=& \frac{k+1}{(k+2)} \\
+P(k+1) \colon \textrm{TRUE}
+\end{eqnarray*}
+Conclusion:
+$$
+\left (  P(0) \; \land \; \biggr ( P(k) \rightarrow P(k+1) \biggr ) \right ) \rightarrow P(n) 
+$$
+
+\section*{Question IV}
+
+\subsection*{Truth Table}
+\begin{displaymath}
+\begin{array}{c c|c|c|c|c|c} % bars control columns
+p & q & 
+(p \rightarrow q) \land (p \rightarrow \neg q) & 
+p \land (p \rightarrow q) & 
+(p \rightarrow q) \land (\neg p \rightarrow q) &
+p \iff (p \iff q) &
+q \land (p \rightarrow q)
+\\ 
+\hline
+T & T & F & T & T & T & T \\
+T & F & F & F & F & F & F \\
+F & T & T & F & T & F & T \\
+F & F & T & F & F & F & F 
+\end{array}
+\end{displaymath}
+
+\subsection*{Equivalence}
+\begin{displaymath}
+\begin{array}{c|c|c} % bars control columns
+Problem & Original & Simplified \\
+\hline
+a & (p \rightarrow q) \land (p \rightarrow \neg q) & \neg p \\ 
+b & p \land (p \rightarrow q) & p \land q \\
+c & (p \rightarrow q) \land (\neg p \rightarrow q) & q \\
+d & p \iff (p \iff q) & p \land q \\
+e & q \land (p \rightarrow q) & q
+\end{array}
+\end{displaymath}
+
+\section*{Question V}
+
+\subsection{1}
+
+\subsection{2}
+
+\subsection{3}
+
+\section*{Question VI}
+
+\subsection{1}
+
+\subsection{2}
+
+\section*{Question VII}
+
+\subsection{1}
+
+\subsection{2}
+
+\end{document}
