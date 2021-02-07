@@ -20,6 +20,39 @@
 
 \section*{Question I}
 
+We will show that $A=B$ using three proofs by contradiction. First, it is helpful to expand the following
+$$
+A \times B = \biggr \{ (a,b) | a \in A, b \in B \biggr \}
+$$
+$$
+B \times A = \biggr \{ (b,a) | b \in B, a \in A \biggr \}
+$$
+Thus the original condition is
+$$
+A \times B \subseteq B \times A
+$$
+$$
+\biggr \{ (a,b) | a \in A, b \in B \biggr \} \subseteq \biggr \{ (b,a) | b \in B, a \in A \biggr \}
+$$
+
+\subsection*{1}
+Suppose $A \not \subseteq B$. Then $\exists \; a \in A $ where $ (a \not \in B) $. Then $\exists \; (a, b) \in A \times  B $ where $ ((a, b) \not \in B \times  A ) $. This defies the original condition. We have proven
+$$A \subseteq B$$
+
+\subsection*{2}
+Suppose $B \not \subseteq A$. Then $\exists \; b \in B $ where $ (b \not \in A) $. Then $\exists \; (a, b) \in A \times  B $ where $ ((a, b) \not \in B \times  A ) $. This defies the original condition. We have proven
+$$B \subseteq A$$
+
+\subsection*{3}
+Suppose $A \neq B$. Then one of the following two statements must be true:
+\begin{enumerate} 
+\item $\exists \; a \in A $ where $ (a \not \in B) $, which violates $A \subseteq B$
+\item $\exists \; b \in B $ where $ (b \not \in A) $, which violates $B \subseteq A$
+\end{enumerate}
+Thus we have proven
+$$A = B$$
+
+
 \section*{Question II}
 
 \subsection*{a}
