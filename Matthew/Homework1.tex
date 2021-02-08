@@ -35,11 +35,25 @@ auto,semithick}}
 
 \section*{Question II}
 
-\subsection*{a}
+Given a relation on the set of all nonempty subsets of \textit{N} tell whether it is reflexive, symmetric, or transitive.
 
+\subsection*{a} 
+\textit{R} is defined by: \textit{ARB} if and only if \textit{A} $\subseteq$ \textit{B} 
+\\\\  - Reflexive because the relation over any given element subset relates every element to itself. In our case \textit{X} $\subseteq$ \textit{X} holds true since a set will always be a subset of itself.
+\\\\  - Not symmetric because an element \textit{X} being a subset of the element Y only guarantees that \textit{Y} contains all of \textit{X}'s elements but not vice versa. So every \textit{XRY} $\neq$ \textit{YRX}. 
+\\\\  - Transitive because an element \textit{X} can only be a subset of \textit{Y} if it contains all of \textit{X}'s elements. Then for \textit{Y} to be a subset of \textit{Z} it must contain all of \textit{Y}'s elements. Thus guaranteeing that all of \textit{X}'s elements are contained within \textit{Z} therefore making \textit{X} $\subseteq$ \textit{Z} and the relation \textit{XRY} $\land$ \textit{YRZ} $\rightarrow$ \textit{XRZ} hold true.  
+    
 \subsection*{b}
-
+\textit{R} is defined by: \textit{ARB} if and only if \textit{A} $\cap$ \textit{B} $\neq \theta$  
+\\\\  - Reflexive because \textit{X} $\cap$ \textit{X} will never be an empty set since the parent set only contains nonempty subsets of \textit{N} and so \textit{X} intersecting with itself will always contain at least one element.
+\\\\  - Symmetric because the relation in this case does not care about order since if the intersection of two sets \textit{X} $\cap$ \textit{Y} results in a nonempty set then \textit{Y} $\cap$ \textit{X} will also yield the same result set.
+\\\\  - Not transitive because while \textit{X} $\cap$ \textit{Y} may result in a nonempty set based on some subset of shared elements, the intersection \textit{Y} $\cap$ \textit{Z} could result in a nonempty set based on a different subset of shared elements. Therefore the transitive relation \textit{XRY} $\land$ \textit{YRZ} $\rightarrow$ \textit{XRZ} would not always hold true.
+    
 \subsection*{c}
+\textit{R} is defined by: \textit{ARB} if and only if 1 $\in$ \textit{A} $\cap$ \textit{B} 
+\\\\  - Reflexive because if the element \textit{X} contains 1 then the intersection \textit{X} with itself will always contain 1.
+\\\\  - Symmetric because the order of the sets in the intersection \textit{X} $\cap$ \textit{Y} doesn't matter and if the result set contains 1 then the intersection \textit{Y} $\cap$ \textit{X} set will also contain 1.
+\\\\  - Transitive because if the result set of \textit{X} $\cap$ \textit{Y} contains 1 and the result set of \textit{Y} $\cap$ \textit{Z} also contains 1 then all 3 sets must contain 1 and so \textit{X} $\cap$ \textit{Z} will also contain one and the transitive relation holds true.
 
 \section*{Question III}
 We will prove
@@ -182,7 +196,7 @@ M = \left(\{q_0, q_1, q_2, q_3, q_4, q_5\}, \{0,
 \[\textrm{where } \delta \textrm{ is given by} \] 
 \begin{center}
     \begin{tabular}{c|cc}
-    & \textit{a} & \textit{b}\\ \hline
+    & \textrm{0} & \textrm{1}\\ \hline
     $q_0$ & $q_1$ & $q_0$ \\
     $q_1$ & $q_1$ & $q_2$ \\
     $q_2$ & $q_3$ & $q_0$ \\
