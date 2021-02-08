@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  7 FEB 2021 16:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  8 FEB 2021 15:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -61,7 +61,7 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@layoutvoffset=\dimen110
 \Gm@dimlist=\toks17
 )
-No file "Homework 1".aux.
+(./Homework 1.aux)
 \openout1 = `"Homework 1.aux"'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
@@ -76,6 +76,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
 LaTeX Font Info:    ... okay on input line 17.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
 LaTeX Font Info:    ... okay on input line 17.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -125,9 +126,9 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 {/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 [2] [3] (./Homework 1.aux) ) 
 Here is how much of TeX's memory you used:
- 836 strings out of 492616
- 11539 string characters out of 6129482
- 87916 words of memory out of 5000000
+ 838 strings out of 492616
+ 11569 string characters out of 6129482
+ 88916 words of memory out of 5000000
  4807 multiletter control sequences out of 15000+600000
  7587 words of font info for 27 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -142,7 +143,7 @@ fonts/cm/cmr12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfo
 nts/cm/cmr17.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfont
 s/cm/cmr7.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmsy10.pfb>
-Output written on "Homework 1.pdf" (3 pages, 103221 bytes).
+Output written on "Homework 1.pdf" (3 pages, 103308 bytes).
 PDF statistics:
  50 PDF objects out of 1000 (max. 8388607)
  35 compressed objects within 1 object stream
