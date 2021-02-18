@@ -128,9 +128,9 @@ $w$ ends in a 'b'
     
     \node[state, initial] (3) {$3$};
     \node[state, right of=3, accepting] (4) {$4$};
-    
-    \draw (3) edge[left, bend left=20, red] node[red, yshift=10] {\tt a} (4);
-    \draw (4) edge[left, bend left=20, blue] node[blue, yshift=-10] {\tt b} (3);
+   
+    \draw (3) edge[left, bend left=20, blue] node[blue, yshift=10] {\tt b} (4);
+    \draw (4) edge[left, bend left=20, red] node[red, yshift=-10] {\tt a} (3);
     
     \draw (3) edge[loop above, red] node[red] {\tt a} (3);
     \draw (2) edge[loop above, blue] node[blue] {\tt b} (2);
