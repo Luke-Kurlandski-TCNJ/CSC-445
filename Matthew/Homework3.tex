@@ -63,10 +63,10 @@ And construct a DFA that recognizes $D$
 \begin{center}
     \begin{tikzpicture}
     
-    \node[state, initial, accepting] (0) {${1}$};
-    \node[state, right of=0, below of=0] (1) {${2}$};
-    \node[state, right of=0, above of=0, accepting] (2) {${1, 2}$};
-    \node[state, right of=1] (3) {$\textrm{sink}$};
+    \node[state, initial, accepting] (0) {$\{1\}$};
+    \node[state, right of=0, below of=0] (1) {$\{2\}$};
+    \node[state, right of=0, above of=0, accepting] (2) {$\{1, 2\}$};
+    \node[state, right of=1] (3) {$q_\textrm{sink}$};
     
     \draw (0) edge[bend left=20] node {\tt b} (1);
     \draw (0) edge node {\tt a} (2);
