@@ -85,6 +85,7 @@ The derivation for $((a))$ is
 \section*{2.5}
 
 \subsection*{b}
+% Tests this PDA: {"type":"PDA","pda":{"transitions":{"start":{"0":{"":[{"state":"s0","stackPushChar":"0"},{"state":"s1","stackPushChar":""}]},"1":{"":[{"state":"s0","stackPushChar":"1"},{"state":"s1","stackPushChar":""}]}},"s0":{"0":{"0":[{"state":"s1","stackPushChar":""}],"":[{"state":"s0","stackPushChar":""}]},"1":{"1":[{"state":"s1","stackPushChar":""}],"":[{"state":"s0","stackPushChar":""}]}}},"startState":"start","acceptStates":["s1"]},"states":{"start":{},"s0":{"top":170,"left":279,"displayId":"s0"},"s1":{"isAccept":true,"top":258,"left":584,"displayId":"s1"}},"transitions":[{"stateA":"start","label":"0,ϵ,0","stateB":"s0"},{"stateA":"start","label":"0,ϵ,ϵ","stateB":"s1"},{"stateA":"start","label":"1,ϵ,1","stateB":"s0"},{"stateA":"start","label":"1,ϵ,ϵ","stateB":"s1"},{"stateA":"s0","label":"0,0,ϵ","stateB":"s1"},{"stateA":"s0","label":"0,ϵ,ϵ","stateB":"s0"},{"stateA":"s0","label":"1,1,ϵ","stateB":"s1"},{"stateA":"s0","label":"1,ϵ,ϵ","stateB":"s0"}],"bulkTests":{"accept":"0\n1\n00\n11\n101\n1001\n010\n0110\n0101010\n1010001101\n0111110\n0110101010\n00000010\n100000011111","reject":"\n10\n01\n001\n110\n1010\n0101\n1010010\n01101\n01010101\n10100011010"}}
 
 \subsection*{e}
 

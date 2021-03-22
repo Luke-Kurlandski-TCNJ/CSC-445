@@ -47,7 +47,7 @@ auto,semithick}}
 \subsection*{a}
 The parse tree for $a$ is
 \begin{center}
-    \includegraphics[scale=.65]{2.1.a.png}
+    \includegraphics[scale=.65]{21a.png}
 \end{center}
 The derivation for $a$ is
 $$E \Rightarrow T \Rightarrow F \Rightarrow a$$
@@ -57,7 +57,7 @@ $$E \Rightarrow T \Rightarrow F \Rightarrow a$$
 \subsection*{b}
 The parse tree for $a+a$ is
 \begin{center}
-    \includegraphics[scale=.65]{2.1.b.png}
+    \includegraphics[scale=.65]{21b.png}
 \end{center}
 The derivation for $a+a$ is
 $$E \Rightarrow E+T \Rightarrow T+T \Rightarrow F+T \Rightarrow a + T \Rightarrow a + F \Rightarrow a + a$$
@@ -67,7 +67,7 @@ $$E \Rightarrow E+T \Rightarrow T+T \Rightarrow F+T \Rightarrow a + T \Rightarro
 \subsection*{c}
 The parse tree for $a+a+a$ is
 \begin{center}
-    \includegraphics[scale=.65]{2.1.c.png}
+    \includegraphics[scale=.65]{21c.png}
 \end{center}
 The derivation for $a+a+a$ is
 \begin{align*}
@@ -80,7 +80,7 @@ The derivation for $a+a+a$ is
 \subsection*{d}
 The parse tree for $((a))$ is
 \begin{center}
-    \includegraphics[scale=.65]{2.1.d.png}
+    \includegraphics[scale=.65]{21d.png}
 \end{center}
 The derivation for $((a))$ is
 \begin{align*}
@@ -95,49 +95,22 @@ The derivation for $((a))$ is
 \begin{center}
     
     \begin{lstlisting}
-    S -> 0X0 | 1X1
+    S -> 0X0 | 1X1 | 0 | 1
     X -> 0X | 1X | e
     \end{lstlisting}
     
 \end{center}
 
+Note that we are intentionally including $0$ and $1$ in this language because these strings start and end with the same character.
+
 \section*{2.5}
 
 \subsection*{b}
 
-The following state diagram represents the pushdown automata that accepts the context-free language $\{w \mid w$ starts and ends with the same symbol$\}$ given $\Sigma = \{0, 1\}$. We begin by pushing the special $\$$ symbol onto the stack to mark the bottom of the stack and then our start symbol $S$. From there we pop $S$ and either push $0X0$ or $1X1$ onto the stack to ensure our string begins and ends with the same symbol. The PDA can then continue adding $0$'s or $1$'s to the stack through the variable $X$ until the special $\$$ is reached. At this point the PDA pops the $\$$ symbol and enters the accept state as our stack is empty and it has successfully created a string that begins and ends with the same symbol.
+Read input. Push 1st symbol to stack, simultaneously nondeterministically enter accept state because a single symbol is the same read from front to back. Continue reading input. Check if the input symbol and stack symbol are the same, nondeterministically entering the accept state in this scenario. If no more input is provided, halt and accept. 
 
 \begin{center}
-    \begin{tikzpicture}
-    
-    \node[state, initial] (0) {$q_0$};
-    \node[state, below of=0] (1) {$q_1$};
-    \node[state, below of=1] (2) {$q_2$};
-    \node[state, right of=2, xshift=1.5cm] (3) {$q_3$};
-    \node[state, right of=3, xshift=1.5cm] (4) {$q_4$};
-    \node[state, left of=2, xshift=-1.5cm] (5) {$q_5$};
-    \node[state, left of=5, xshift=-1.5cm] (6) {$q_6$};
-    \node[state, below of=2, yshift=-1.5cm] (7) {$q_7$};
-    \node[state, below of=7, left of=7, xshift=-1.5cm, yshift=-0.5cm] (8) {$q_8$};
-    \node[state, below of=7, right of=7, xshift=1.5cm, yshift=-0.5cm, accepting] (9) {$q_9$};
-    
-    \draw (0) edge node {\tt $\epsilon$, $\epsilon \rightarrow \$$} (1);
-    \draw (1) edge node {\tt $\epsilon$, $\epsilon \rightarrow S$} (2);
-    \draw (2) edge node[below] {\tt $\epsilon$, $S \rightarrow 0$} (3);
-    \draw (3) edge node[below] {\tt $\epsilon$, $\epsilon \rightarrow X$} (4);
-    \draw (4) edge[bend left=10] node {\tt $\epsilon$, $\epsilon \rightarrow 0$} (7);
-    \draw (2) edge node {\tt $\epsilon$, $S \rightarrow 1$} (5);
-    \draw (5) edge node {\tt $\epsilon$, $\epsilon \rightarrow X$} (6);
-    \draw (6) edge[bend right=10] node[below, yshift=-0.25cm] {\tt $\epsilon$, $\epsilon \rightarrow 1$} (7);
-    \draw (7) edge[loop above, white] node[yshift=1cm, black] {\tt $\epsilon$, $X \rightarrow \epsilon$} (7);
-    \draw (7) edge[loop above, white] node[yshift=0.5cm, black] {\tt $0$, $0 \rightarrow \epsilon$} (7);
-    \draw (7) edge[loop above] node {\tt $1$, $1 \rightarrow \epsilon$} (7);
-    \draw (7) edge[bend right=10] node[above, left] {\tt$\epsilon$, $X \rightarrow$ $0, 1$} (8);
-    \draw (8) edge[bend right=10] node[below, right] {\tt$\epsilon$, $\epsilon \rightarrow X$} (7);
-    \draw (7) edge node {\tt$\epsilon$, $\$ \rightarrow \epsilon$} (9);
-    
-
-    \end{tikzpicture}
+    \includegraphics[scale=1]{25b.png}
 \end{center}
 
 \newpage
@@ -147,7 +120,7 @@ The following state diagram represents the pushdown automata that accepts the co
 
 Begin by placing $\$$ on the stack. Read input and push the input symbols on the stack. This first phase is symbolic of reading the first half of the string. Nondeterministically, at some point of reading input, start comparing input symbols with symbols popped from the stack. If input symbol and stack symbol do not match, halt without accepting, else, continue. This second phase is symbolic of reading the second half of the string and checking that it matches the first half. Our PDA carefully handles this transition to account for even/odd numbered strings. Finally, if input symbol is $\epsilon$ and stack symbol is $\$$, halt and accept. 
 
-\includegraphics[scale=.65]{2.5.b.png}
+\includegraphics[scale=.65]{25e.png}
 
 \newpage
 
@@ -157,7 +130,7 @@ The CFG that generates the complement for the language $A = \{a^nb^n$ $\mid$ $n 
 \begin{center}
     
     \begin{lstlisting}
-    S -> A | bX | aXbXaX
+    S -> aA | bX | aXbXaX
     
     X -> aX | bX | e
     
@@ -173,5 +146,7 @@ The CFG that generates the complement for the language $A = \{a^nb^n$ $\mid$ $n 
 This grammar may produce a string that belongs to one of two different languages. The first language is that of zero or more $0$s, followed by a $\#$, followed by two times as many $0$s that came before. The second language is that of zero or more $0$s, followed by a $\#$, followed by zero or more $0$s, followed by a $\#$, followed by zero or more $0$s.\\\\
 More formally,
 $$L(G) = \{ 0^n\#0^{2n} \; | \; n \geq 0 \} \cup  \{ 0^a\#0^b\#0^c \; | \; a,b,c \geq 0 \}$$
+
+
 
 \end{document}
