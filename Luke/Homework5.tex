@@ -31,7 +31,9 @@ auto,semithick}}
 
 \maketitle
 
-\section*{2.30}
+\section*{2.15 Matthew}
+
+\section*{2.30 Matthew}
 
 We will prove L is not a context free language using a proof by contradiction and the Pumping Lemma.
 $$L = \{ t_1\#t_2\#...\#t_k | k \geq 2, t_i \in \{ a, b\}^*, \exists ( t_i = t_j,  i \neq j ) \}$$
@@ -57,41 +59,31 @@ On input string $w$
 \end{enumerate}
 
 \subsection*{c}
+Run the machine from part b on input w. If it accepts, then reject. If it rejects, then accept. Alternatively, build a new TM as described below.\\\\
 On input string $w$
 \begin{enumerate}
     \item Move the head to the front of the tape. Scan the tape and mark the first 1 that has not been marked. If none are found, move to stage 5.
     \item Move the head to the front of the tape. Scan the tape and mark the first 0 that has not been marked. If no 0 is found, accept. 
     \item Scan the tape and mark the first 0 that has not been marked. If no 0 is found, accept.
     \item Go to stage 1
-    \item Move the head to the front of the tape. Scan the tape to see if any unmarked 1s remain. If none remain, reject, else accept. 
+    \item Move the head to the front of the tape. Scan the tape to see if any unmarked 0s remain. If none remain, reject, else accept. 
 \end{enumerate}
 
 \section*{3.15}
 
-\subsection*{b}
+\subsection*{b Matthew}
 Suppose we have Turing Machines $M_1$ and $M_2$ that decide languages $L_1$ and $L_2$ respectively. We describe the Turing Machine $M'$ that decides the concatenation of $L_1$ and $L_2$.\\\\
 On input string $w$
-\begin{enumerate}
-    \item Run $M_1$ on the first portion of w 
-    \begin{itemize}
-        \item If $M_1$ enters an accept state $w$, begin stage 2
-        \item If $M_1$ does not accept, reject
-    \end{itemize} 
-    \item Run $M_2$ on the remaining portion of w.
-    \begin{itemize}
-        \item If $M_2$ accepts, then accept
-        \item Else, reject
-    \end{itemize}
-\end{enumerate}
 
-\subsection*{c}
+\subsection*{c Both}
 Suppose we have a Turing Machine $M$ that decides the language $L$. We describe the Turing Machine $M'$ that decides the language $L^*$.\\\\
 On input string $w$
 \begin{enumerate}
-    \item Run $M$ on w. 
+    \item Run M on w from the first unmarked cell onward
     \begin{itemize}
-        \item If w is empty, accept
-        \item If $M$ enters an accept state, repeat stage 1 at the current point on input string
+        \item If there are no unmarked cells remaining accept
+        \item Mark the current cell of the tape
+        \item If M enters an accept state, repeat stage 1. Else if M enters a reject state, then reject.
     \end{itemize}
 \end{enumerate}
 
@@ -107,6 +99,7 @@ On input string $w$
 \end{enumerate}
 
 \subsection*{e}
+Having proved that decidable languages are closed under union and complement, DeMorgan's Law proves they are closed under intersection as well (as seen in other classes of languages).\\\\
 Suppose we have Turing Machines $M_1$ and $M_2$ that decide languages $L_1$ and $L_2$ respectively. We describe the Turing Machine $M'$ that decides the intersection of $L_1$ and $L_2$.\\\\
 On input string $w$
 \begin{enumerate}
