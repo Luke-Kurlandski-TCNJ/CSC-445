@@ -1,0 +1,141 @@
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{relsize}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+\tikzset{node distance=2.5cm, % Minimum distance between two nodes. Change if necessary.
+every state/.style={ % Sets the properties for each state
+semithick,
+fill=gray!10},
+initial text={}, % No label on start arrow
+double distance=2pt, % Adjust appearance of accept states
+every edge/.style={ % Sets the properties for each transition
+draw,->,>=stealth', % Makes edges directed with bold arrowheads
+auto,semithick}}
+
+\geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+}
+
+\title{Homework 5\\[0.2em]\smaller{}CSC 445-01: Theory of Computation}
+\author{Matthew Mabrey, Luke Kurlandski}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{2.15}
+The construction of G' from CFG G = (V, $\Sigma$, R, S) for the CFL A by adding the new rule $S \rightarrow SS$ fails to prove that the class of context-free languages is closed under star because G' may not produce the empty string, $\epsilon$. This is because we do not know if there is a way to produce the empty string from G, in which case we do not know if there is a way to produce the empty string from G'. The Kleene star of a language must always contain $\epsilon$. 
+
+\section*{2.30}
+
+We will prove L is not a context free language using a proof by contradiction and the Pumping Lemma.
+$$L = \{ t_1\#t_2\#...\#t_k | k \geq 2, t_i \in \{ a, b\}^*, \exists ( t_i = t_j,  i \neq j ) \}$$
+Suppose L is a CFL. Then for a string $w \in L$ of length greater than p, there exists some decomposition of s, $s = uvxyz$ such that 
+\begin{enumerate}
+    \item $uv^ixy^iz \in L$ for $i \geq 0$
+    \item $|vy| > 0$
+    \item $|vxy| \leq p$
+\end{enumerate}
+We let $w = a^pb^p\#a^pb^p$ because $|w| \geq p + 1$ and $w \in L$.
+
+\begin{enumerate}
+    \item Since there must be two terms equal to each other and we only have two terms, both sides of $\#$ must be equal to each other.
+    \item Since there must always be at least two terms, $v$ and $y$ cannot include the delimiter $\#$ because choosing i = 0 would mean there is no delimiter $\#$ and therefore only one term.
+    \item If $v$ and $y$ were both on one side of the delimiter $\#$ then it would fail for every $i \neq 1$ since then $t_1 \neq t_2$. Therefore $x$ must contain the $\#$ delimiter and $v$ is to the left of it while $y$ is to the right
+    \item $v$ must contain only $b$'s and $y$ must contain only $a$'s since if either has both then the other cannot be on the other side of the delimiter $\#$ since there are $p$ number of $b$'s before the delimiter $\#$ and $p$ number of $a$'s after and $|vxy| <= p$. This remains the case in the situation where $v$ or $y$ is empty as well.
+    \item Therefore, we are left with the following decomposition: 
+    \begin{itemize}
+    	\item $u = a^p b^{p-q}$
+	\item $v = b^q $
+	\item $x = \#$
+	\item $y = a^{r}$
+	\item $z = a^{p-r}b^p$
+    \end{itemize}
+\end{enumerate}
+Its clear that $s=uv^ixy^iz$ results in a string of the form $t_1 \# t_2$. But when $i \neq 1$, $t_1 \neq t_2$, thus $s \notin L$. Therefore, we have a contradiction and L is not a context free language.
+
+\section*{3.8}
+\subsection*{b}
+On input string $w$
+\begin{enumerate}
+    \item Move the head to the front of the tape. Scan the tape and mark the first 1 that has not been marked. If none are found, move to stage 5.
+    \item Move the head to the front of the tape. Scan the tape and mark the first 0 that has not been marked. If no 0 is found, reject. 
+    \item Scan the tape and mark the first 0 that has not been marked. If no 0 is found, reject.
+    \item Go to stage 1
+    \item Move the head to the front of the tape. Scan the tape to see if any unmarked 0s remain. If none remain, accept, else reject. 
+\end{enumerate}
+
+\subsection*{c}
+Run the machine from part b on input w. If it accepts, then reject. If it rejects, then accept. Alternatively, build a new TM as described below.\\\\
+On input string $w$
+\begin{enumerate}
+    \item Move the head to the front of the tape. Scan the tape and mark the first 1 that has not been marked. If none are found, move to stage 5.
+    \item Move the head to the front of the tape. Scan the tape and mark the first 0 that has not been marked. If no 0 is found, accept. 
+    \item Scan the tape and mark the first 0 that has not been marked. If no 0 is found, accept.
+    \item Go to stage 1
+    \item Move the head to the front of the tape. Scan the tape to see if any unmarked 0s remain. If none remain, reject, else accept. 
+\end{enumerate}
+
+\section*{3.15}
+
+\subsection*{b}
+Suppose we have two Turing machines $TM_1$ and $TM_2$ that that decide the languages $L_1$ and $L_2$ respectively. To determine that the class of decidable languages is closed under concatenation we construct a new machine $TM_c$ that copies the input onto its tape and then inserts a delimiter $\#$ at the start of the tape. We then 
+\begin{enumerate}
+    \item Run $TM_1$ on all of the input to the left of the delimiter $\#$ and $TM_2$ on all of the input to the right of $\#$
+    \begin{itemize}
+        \item If both machines accepts, $TM_c$ accepts the input as part of $L_1 \circ L_2$
+        \item Else move the delimiter $\#$ one position to the right, copying the symbol that was there to $\#$'s old position
+        \item If we've reached the end of the input and just copied $\#$ onto an empty tape symbol, then $TM_c$ rejects the input as not being part of $L_1 \circ L_2$
+        \item Else go back to step 1
+    \end{itemize} 
+\end{enumerate}
+
+\subsection*{c}
+Suppose we have a Turing Machine $M$ that decides the language $L$. We describe the nondeterministic two-tape Turing Machine $M'$ that decides the language $L^*$.\\\\
+On input string $w$
+\begin{enumerate}
+    \item Nondeterministically select an integer $k \leq |w| $
+    \item Nondeterministically partition w into k components, $w_1, w_2, ..., w_k$
+    \item Run M on each string $w_1, w_2, ..., w_k$
+        \begin {itemize}
+        		\item If M accepts all the strings $w_1, w_2, ..., w_k$ then accept
+        \end{itemize}
+\end{enumerate}
+
+\subsection*{d}
+Suppose we have a Turing Machine $M$ that decides the language $L$. We describe the Turing Machine $M'$ that decides the language $L^c$.\\\\
+On input string $w$
+\begin{enumerate}
+    \item Run $M$ on w. 
+    \begin{itemize}
+        \item If $M$ accepts, then reject
+        \item Else accept
+    \end{itemize}
+\end{enumerate}
+
+\subsection*{e}
+Having proved that decidable languages are closed under union and complement, DeMorgan's Law proves they are closed under intersection as well (as seen in other classes of languages).\\\\
+Suppose we have Turing Machines $M_1$ and $M_2$ that decide languages $L_1$ and $L_2$ respectively. We describe the Turing Machine $M'$ that decides the intersection of $L_1$ and $L_2$.\\\\
+On input string $w$
+\begin{enumerate}
+    \item Run $M_1$ on w 
+    \begin{itemize}
+        \item If $M_1$ accepts, continue to stage 2
+        \item Else reject
+    \end{itemize} 
+    \item Run $M_2$ on w
+    \begin{itemize}
+        \item If $M_2$ accepts, accept
+        \item Else reject
+    \end{itemize}
+\end{enumerate}
+
+\end{document}
