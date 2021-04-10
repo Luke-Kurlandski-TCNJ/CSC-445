@@ -75,16 +75,16 @@ On input string $w$
 Suppose we have Turing Machines $M_1$ and $M_2$ that decide languages $L_1$ and $L_2$ respectively. We describe the Turing Machine $M'$ that decides the concatenation of $L_1$ and $L_2$.\\\\
 On input string $w$
 
-\subsection*{c Both}
-Suppose we have a Turing Machine $M$ that decides the language $L$. We describe the Turing Machine $M'$ that decides the language $L^*$.\\\\
+\subsection*{c}
+Suppose we have a Turing Machine $M$ that decides the language $L$. We describe the nondeterministic two-tape Turing Machine $M'$ that decides the language $L^*$.\\\\
 On input string $w$
 \begin{enumerate}
-    \item Run M on w from the first unmarked cell onward
-    \begin{itemize}
-        \item If there are no unmarked cells remaining accept
-        \item Mark the current cell of the tape
-        \item If M enters an accept state, repeat stage 1. Else if M enters a reject state, then reject.
-    \end{itemize}
+    \item Nondeterministically select an integer $k \leq |w| $
+    \item Nondeterministically partition w into k components, $w_1, w_2, ..., w_k$
+    \item Run M on each string $w_1, w_2, ..., w_k$
+        \begin {itemize}
+        		\item If M accepts all the strings $w_1, w_2, ..., w_k$ then accept
+        \end{itemize}
 \end{enumerate}
 
 \subsection*{d}
