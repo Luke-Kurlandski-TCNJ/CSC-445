@@ -1,0 +1,120 @@
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{relsize}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{geometry}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+\tikzset{node distance=2.5cm, % Minimum distance between two nodes. Change if necessary.
+every state/.style={ % Sets the properties for each state
+semithick,
+fill=gray!10},
+initial text={}, % No label on start arrow
+double distance=2pt, % Adjust appearance of accept states
+every edge/.style={ % Sets the properties for each transition
+draw,->,>=stealth', % Makes edges directed with bold arrowheads
+auto,semithick}}
+
+\geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+}
+
+\title{Homework 6\\[0.2em]\smaller{}CSC 445-01: Theory of Computation}
+\author{Matthew Mabrey, Luke Kurlandski}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{4.3}
+
+A DFA will recognize $\Sigma^*$ iff every reachable state is a final state. In a similar fashion to Theorem 4.4, we design the TM T to test whether or not this is the case and decide $ALL_{DFA}$.\\\\
+T = ``On input A, where A is a DFA:
+\begin{enumerate}
+    \item Mark A's start state
+    \item Do until no new state is marked:
+    \begin{enumerate}
+        \item Mark any state that can be reached via the transition function from a marked state
+    \end{enumerate}
+    \item If every marked state is a final state, then \textit{accept}; Else any marked state is not a final state, then \textit{reject}.''
+\end{enumerate}
+
+\section*{4.4}
+
+Every CFG has an equivalent Chomsky Normal Form. The rules of a Chomsky Normal CFG state that the only way to generate the empty string is through the rule $S \rightarrow \epsilon$. Using this fact, we design a TM T to decide $A\epsilon_{CFG}$.\\\\
+T = ``On input G, where G is a CFG
+\begin{enumerate}
+    \item Convert G to a Chomsky Normal Form G' with rules R'
+    \item If the rule $S\rightarrow \epsilon$ is in R', then \textit{accept}; Else \textit{reject}.''
+\end{enumerate}
+
+\section*{4.11}
+
+We construct a TM I to decide $\textrm{INFINTE}_{PDA}$. \\\\
+I = ``On input M, where $P=(Q,\Sigma,\Gamma,\delta,q_0,F)$ is a PDA that recognizes $L_P$:
+\begin{enumerate}
+    \item Let $k = |\mathscr{P}(Q \times \Gamma_\epsilon)|$
+    \item Construct DFA, D, to recognize $L_D = \{ w \;\; \bigr | \;\; |w| > k \}$
+    \item Construct DFA, M, to recognize $L_M = L_D \cap L_P$
+    \item Use the $E_{DFA}$ decider Theorem 4.4 and \textit{reject} if $L_M = \emptyset$; Else \textit{accept} if $L_M \neq \emptyset$
+\end{enumerate}
+\textbf{Required:} For a PDA to accept an infinite number of strings, there cannot exist an upper limit on the length of the strings the PDA accepts, ie, it must accept strings of arbitrary length. \\\\
+Our PDA has a transition function $\delta: Q \times \Sigma_\epsilon \Gamma_\epsilon \rightarrow \mathscr{P}(Q \times \Gamma_\epsilon)$. Therefore, at any time, the PDA may be in any of $|\mathscr{P}(Q \times \Gamma_\epsilon)|$ different configurations of state and stack. We choose the integer $k$ to be this size. We build a language $L_D$ that contains all words longer than $k$. Using $L_D$, we build another language $L_M$ that contains the elements in the language recognized by our PDA $L_P$ that are longer than $k$. If the language of the PDA $L_P$ contains no words longer than k, then $L_M$ will be empty and our TM will reject. If $L_P$ contains some word longer than $k$, we accept because that word may be pumped with the pumping lemma for CFGs, meaning that the PDA will accept an infinte number of strings. 
+
+\section*{5.1}
+
+First we define
+\begin{align*}
+    EQ_{CFG} &= \{ <G_1, G_2> | G_1 \textrm{ and } G_2 \textrm{ are equivalent context free grammars} \}\\
+    ALL_{CFG} &= \{ <G> | G \textrm{ is a CFG and } L(G) = \Sigma^* \} 
+\end{align*} 
+We will use a proof by contradiction to show that $EQ_{CFG}$ is undecidable.\\\\
+Suppose that $EQ_{CFG}$ were decidable by some TM, R. Then we could use R to construct a TM, S, that decides $ALL_{CFG}$. We describe S in the following paragraph.\\\\
+On input G, where G is a CFG:
+\begin{enumerate}
+    \item Run $<G, \Sigma*>$ on R
+    \item \textit{accept} if R accepts; Else \textit{reject}
+\end{enumerate}
+However, we know from Theorem 5.13 that $ALL_{CFG}$ is undecidable. Therefore, we have a contradiction and $EQ_{CFG}$ cannot be decidable.
+
+\section*{5.4}
+
+No.\\\\
+We revisit the definition of mapping reducibility. If $A \leq_m B$, then there is a computable function $f$ where
+$$w \in A \textrm{  iff   } f(w) \in B$$
+$f$ is defined such that some Turing Machine, on input $w$, halts with the output $f(w)$ on its tape. \\\\
+However, just because the function $f(w)$ produces strings that belong to the regular language B does not nessecitate that the input strings $w \in A$ form a regular language themselves. So A does not need to be regular for B to be regular.
+
+\section*{5.9 (incomplete)}
+
+First we define
+\begin{align*}
+    T &= \{ <M> | M \textrm{ is a TM that accepts } w^R  \textrm{ whenever it accepts } w \}\\
+    A_{TM} &= \{ <M, w> | M \textrm{ is TM and accepts } w \} 
+\end{align*} 
+We will use a proof by contradiction to show that $T$ is undecidable.\\\\
+Suppose that $T$ were decidable by some TM, R. Then we could use R to construct a TM, S, that decides $A_{TM}$. We describe S in the following paragraph.\\\\
+On input $<M, w>$, 
+\begin{enumerate}
+    \item Run $<M>$ on R
+    \item If R accepts
+    \begin{enumerate}
+        \item run $w$ (or $w^R$) on M. If M accepts, then \textit{accept}; Else \textit{reject}
+    \end{enumerate}
+    \item If R rejects
+    \begin{enumerate}
+        \item run $w$ on M. If M accepts, then \textit{accept}; Else \textit{reject}
+    \end{enumerate}
+\end{enumerate}
+However, we know that $A_{TM}$ is undecidable. Therefore, we have a contradiction and $T$ cannot be decidable.
+
+\section*{5.22}
+
+\end{document}
