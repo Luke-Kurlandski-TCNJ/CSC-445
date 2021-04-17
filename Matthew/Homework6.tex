@@ -1,0 +1,112 @@
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{relsize}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+\tikzset{node distance=2.5cm, % Minimum distance between two nodes. Change if necessary.
+every state/.style={ % Sets the properties for each state
+semithick,
+fill=gray!10},
+initial text={}, % No label on start arrow
+double distance=2pt, % Adjust appearance of accept states
+every edge/.style={ % Sets the properties for each transition
+draw,->,>=stealth', % Makes edges directed with bold arrowheads
+auto,semithick}}
+
+\geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+}
+
+\title{Homework 6\\[0.2em]\smaller{}CSC 445-01: Theory of Computation}
+\author{Matthew Mabrey, Luke Kurlandski}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{4.3}
+Construct a TM S that will decide $ALL_{DFA} = \{\langle A \rangle \mid A$ is a DFA and $L(A) = \Sigma^*$\}. Inside S the machine will check:
+\begin{enumerate}
+    \item If all states of the input DFA $\langle A \rangle$ are final (e.g. $Q = F$), ACCEPT! 
+    \item Else, REJECT!
+\end{enumerate}
+On any input the constructed TM $S$ now correctly: 
+\begin{enumerate}
+    \item Halts because $Q$ is defined as a finite set of states and $F \subseteq Q$ so our machine will never halt as it doesn't run any input and just checks equivalence of two finite sets.
+    \item Accepts on $Q = F$ since the DFA will accept all strings ($\Sigma^*$).
+    \item Rejects on $Q \neq F$ because there would be a non-accepting state the DFA could end in which would produce an unaccepted string, meaning it does not produce $\Sigma^*$.
+\end{enumerate}
+Thus the constructed TM $S$ decides $ALL_{DFA}$ because it correctly accepts or rejects and never halts on any input.
+
+\section*{4.4}
+Construct a TM S that will decide $A\varepsilon_{CFG} = \{\langle G \rangle \mid G$ is a CFG that generates $\varepsilon\}$. Inside S the machine will:
+\begin{enumerate}
+    \item Convert input CFG $\langle G \rangle$ to a CNF
+    \item If the new CNF grammar's start state has a transition $S_0 -> \epsilon$, then accept
+    \item Else, reject
+\end{enumerate}
+
+\section*{4.11}
+Construct a TM S that will decide $INFINITE_{PDA} = \{\langle M \rangle \mid M$ is a PDA and $L(M)$ is infinite $\}$. Inside S the machine will:
+\begin{enumerate}
+    \item Non-deterministic search towards all final states
+    \item If there is a loop transition AND every path that has a loop transition that includes pushing a symbol to stack has a counterpart loop that pops these characters, Accept?
+    \item Else reject
+\end{enumerate}
+
+\section*{5.1}
+Given a TM $R$ that we assume decides $EQ_{CFG}$ we can construct a TM $S$ that decides $A_{TM}$. Inside $S$ the machine will:
+
+\begin{enumerate}
+    \item Construct a CFG $G$ that generates $\overline{\rm L_x}$ given $A_{TM}$'s input $\langle M, w\rangle = x$ ($\overline{\rm L_x} = \Sigma^*$ iff $M$ doesn't accept $w$)
+    \item Construct a CFG $H$ that generates $\Sigma^*$
+    \item Feed $\langle G, H \rangle$ as input to the machine $R$
+    \begin{itemize}
+        \item If $R$ accepts, then $S$ rejects
+        \item If $R$ rejects, then $S$ accepts
+    \end{itemize}
+\end{enumerate}
+We have created a machine that decides $A_{TM}$, which is undecidable, using the assumed decidability of $R$. This is a contradiction so $R$ must be undecidable.
+
+\section*{5.4}
+(Not sure about answer)\\
+$A = \{0^n1^n \mid n \geq 0\}$\\
+$B = \{0^n \mid n \geq 0\}$\\
+$f(x)= $ divide string in two, use first half\\
+$A$ is not regular, $B$ is regular\\
+$A \leq_m B$
+\section*{5.9}
+
+\begin{enumerate}
+    \item Construct a TM T that decides $A$ = $\{ \langle M \rangle \mid w^R$ is accepted if w is accepted$\}$ inside a TM S used to decide $A_{TM}$.
+    \item Inside S, construct a new TM $M_1$ from input $\langle \langle M\rangle, w \rangle$. Using input $w_1$:
+    \begin{itemize}
+        \item If $w_1 = w^R$, Accept
+        \item Else if $w_1 = w$, Run $M$ on $w_1$
+        \item Else, Reject 
+    \end{itemize}
+    \item Feed ${M_1}$ into TM T, if it accepts then $M$ must accept $w$ since T only accepts ${M}$ if both $w^R$ and $w$ are accepted and we can guarantee $w^R$ is accepted because we constructed $M_1$ to accept it.
+\end{enumerate}
+Thus we can use TM T to decide $A_{TM}$, which is undecidable, so T must also be undecidable.
+
+\section*{5.22}
+
+We let M be the recognizer of $A_{TM}$ and $f$ be the reduction from $A$ to $A_{TM}$. We describe a recognizer $N$ for $A$ as follows:
+\begin{enumerate}
+    \item $N$ = "On input w: 
+    \begin{itemize}
+        \item Compute $f(w)$
+        \item Run M on $f(w)$ and output $M$'s outputs"
+    \end{itemize}
+\end{enumerate}
+
+Clearly, if $w \in A$ then $f(w) \in A_{TM}$ because $f$ is a reduction from $A$ to $A_{TM}$. Thus, M accepts $f(w)$ whenever $w \in A$. Therefore, $N$ recognizes $A$.
+
+\end{document}
