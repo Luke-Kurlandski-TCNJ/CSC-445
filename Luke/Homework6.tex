@@ -1,4 +1,3 @@
-
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage{relsize}
@@ -25,7 +24,7 @@ auto,semithick}}
  top=20mm,
 }
 
-\title{Homework 6\\[0.2em]\smaller{}CSC 445-01: Theory of Computation}
+\title{Homework 5\\[0.2em]\smaller{}CSC 445-01: Theory of Computation}
 \author{Matthew Mabrey, Luke Kurlandski}
 \date{\today}
 
@@ -55,7 +54,7 @@ T = ``On input G, where G is a CFG
     \item If the rule $S\rightarrow \epsilon$ is in R', then \textit{accept}; Else \textit{reject}.''
 \end{enumerate}
 
-\section*{4.11}
+\section*{4.11 (shaky)}
 
 We construct a TM I to decide $\textrm{INFINTE}_{PDA}$. \\\\
 I = ``On input M, where $P=(Q,\Sigma,\Gamma,\delta,q_0,F)$ is a PDA that recognizes $L_P$:
@@ -79,9 +78,10 @@ We will use a proof by contradiction to show that $EQ_{CFG}$ is undecidable.\\\\
 Suppose that $EQ_{CFG}$ were decidable by some TM, R. Then we could use R to construct a TM, S, that decides $ALL_{CFG}$. We describe S in the following paragraph.\\\\
 On input G, where G is a CFG:
 \begin{enumerate}
-    \item Run $<G, \Sigma*>$ on R
+    \item Run $<G, G_{\Sigma^*}>$ on R, where $L(G_{\Sigma^*}) = \Sigma^*$
     \item \textit{accept} if R accepts; Else \textit{reject}
 \end{enumerate}
+In summary, machine S uses machine R to compare an input grammar, G, to a grammar whose language is $\Sigma^*$. The result of R's computation then determines if $L(G) = \Sigma^*$.\\\\
 However, we know from Theorem 5.13 that $ALL_{CFG}$ is undecidable. Therefore, we have a contradiction and $EQ_{CFG}$ cannot be decidable.
 
 \section*{5.4}
@@ -90,7 +90,8 @@ No.\\\\
 We revisit the definition of mapping reducibility. If $A \leq_m B$, then there is a computable function $f$ where
 $$w \in A \textrm{  iff   } f(w) \in B$$
 $f$ is defined such that some Turing Machine, on input $w$, halts with the output $f(w)$ on its tape. \\\\
-However, just because the function $f(w)$ produces strings that belong to the regular language B does not nessecitate that the input strings $w \in A$ form a regular language themselves. So A does not need to be regular for B to be regular.
+However, just because the function $f(w)$ produces strings that belong to the regular language B does not nessecitate that the input strings $w \in A$ form a regular language themselves. So A does not need to be regular for B to be regular.\\\\
+For further evidence, we provide a counter example. Suppose A is context free language with an alphabet $\Sigma=\{0,1\}$. If we map all members of A to 1 and all non members of A to 0, then $A \leq_m B$ where B is a regular language with one member: the single character '1'.
 
 \section*{5.9 (incomplete)}
 
@@ -103,18 +104,32 @@ We will use a proof by contradiction to show that $T$ is undecidable.\\\\
 Suppose that $T$ were decidable by some TM, R. Then we could use R to construct a TM, S, that decides $A_{TM}$. We describe S in the following paragraph.\\\\
 On input $<M, w>$, 
 \begin{enumerate}
-    \item Run $<M>$ on R
-    \item If R accepts
-    \begin{enumerate}
-        \item run $w$ (or $w^R$) on M. If M accepts, then \textit{accept}; Else \textit{reject}
-    \end{enumerate}
-    \item If R rejects
-    \begin{enumerate}
-        \item run $w$ on M. If M accepts, then \textit{accept}; Else \textit{reject}
-    \end{enumerate}
+    \item Do stuff. Not sure what tho.
 \end{enumerate}
 However, we know that $A_{TM}$ is undecidable. Therefore, we have a contradiction and $T$ cannot be decidable.
 
-\section*{5.22}
+\section*{5.22 (shaky on ltr)}
+
+We will prove 
+$$
+\textrm{A is Turing-recognizable} \leftrightarrow A \leq_m A_{TM}
+$$
+
+\subsection*{left-to-right direction}
+We will prove
+$$\textrm{A is Turing-recognizable} \rightarrow A \leq_m A_{TM}$$
+If A is Turing recognizable, then some TM $T_A$ recognizes it. We design a TM $T$ that writes the concatenation of a word, w, and $T_A$ on its tape if $T_A$ accepts w. We describe the TM $T$:\\\\
+On input w:
+\begin{enumerate}
+    \item Run w on $T_A$
+    \item If $T_A$ accepts, write $<T_A, w>$ on the tape and accept. Else write the empty string.
+\end{enumerate}
+We see that every word in $A$ gets mapped to $<T_A, w>$, ie, some member of $A_{TM}$.
+This fulfils the mapping reduction from $A$ to $A_{TM}$.
+
+\subsection*{right-to-left direction}
+We will prove
+$$A \leq_m A_{TM} \rightarrow \textrm{A is Turing-recognizable}$$
+We know from theorem 5.28 that if $A \leq_m B$ and B is Turing-recognizable, then A is Turing recognizable. $A_{TM}$ is a Turing-recognizable language, thus A must be as well.
 
 \end{document}
