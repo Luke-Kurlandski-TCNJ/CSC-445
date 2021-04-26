@@ -1,0 +1,143 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{relsize}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{geometry}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+\tikzset{node distance=2.5cm, % Minimum distance between two nodes. Change if necessary.
+every state/.style={ % Sets the properties for each state
+semithick,
+fill=gray!10},
+initial text={}, % No label on start arrow
+double distance=2pt, % Adjust appearance of accept states
+every edge/.style={ % Sets the properties for each transition
+draw,->,>=stealth', % Makes edges directed with bold arrowheads
+auto,semithick}}
+
+\geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+}
+
+\title{Homework 6\\[0.2em]\smaller{}CSC 445-01: Theory of Computation}
+\author{Matthew Mabrey, Luke Kurlandski}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{4.3}
+
+A DFA will recognize $\Sigma^*$ iff every reachable state is a final state. In a similar fashion to Theorem 4.4, we design the TM T to test whether or not this is the case and decide $ALL_{DFA}$.\\\\
+T = ``On input A, where A is a DFA:
+\begin{enumerate}
+    \item Mark A's start state
+    \item Do until no new state is marked:
+    \begin{enumerate}
+        \item Mark any state that can be reached via the transition function from a marked state
+    \end{enumerate}
+    \item If every marked state is a final state, then \textit{accept}; Else any marked state is not a final state, then \textit{reject}.''
+\end{enumerate}
+
+\section*{4.4}
+Construct a TM S that will decide $A\varepsilon_{CFG} = \{\langle G \rangle \mid G$ is a CFG that generates $\varepsilon\}$. Inside S the machine will:
+\begin{enumerate}
+    \item Convert input CFG $\langle G \rangle$ to a CNF
+    \item If the new CNF grammar's start state has a transition $S_0 \rightarrow \epsilon$, then accept
+    \item Else, reject
+\end{enumerate}
+
+\section*{4.11}
+
+We construct a TM I to decide $\textrm{INFINTE}_{PDA}$. \\\\
+I = ``On input M, where $P=(Q,\Sigma,\Gamma,\delta,q_0,F)$ is a PDA that recognizes $L_P$:
+\begin{enumerate}
+    \item Let $k = |\mathscr{P}(Q \times \Gamma_\epsilon)|$
+    \item Construct DFA, D, to recognize $L_D = \{ w \;\; \bigr | \;\; |w| > k \}$
+    \item Construct DFA, M, to recognize $L_M = L_D \cap L_P$
+    \item Use the $E_{DFA}$ decider Theorem 4.4 and \textit{reject} if $L_M = \emptyset$; Else \textit{accept} if $L_M \neq \emptyset$
+\end{enumerate}
+\textbf{Required:} For a PDA to accept an infinite number of strings, there cannot exist an upper limit on the length of the strings the PDA accepts, ie, it must accept strings of arbitrary length. \\\\
+Our PDA has a transition function $\delta: Q \times \Sigma_\epsilon \Gamma_\epsilon \rightarrow \mathscr{P}(Q \times \Gamma_\epsilon)$. Therefore, at any time, the PDA may be in any of $|\mathscr{P}(Q \times \Gamma_\epsilon)|$ different configurations of state and stack. We choose the integer $k$ to be this size. We build a language $L_D$ that contains all words longer than $k$. Using $L_D$, we build another language $L_M$ that contains the elements in the language recognized by our PDA $L_P$ that are longer than $k$. If the language of the PDA $L_P$ contains no words longer than k, then $L_M$ will be empty and our TM will reject. If $L_P$ contains some word longer than $k$, we accept because that word may be pumped with the pumping lemma for CFGs, meaning that the PDA will accept an infinte number of strings. 
+
+\section*{5.1}
+
+First we define
+\begin{align*}
+    EQ_{CFG} &= \{ <G_1, G_2> | G_1 \textrm{ and } G_2 \textrm{ are equivalent context free grammars} \}\\
+    ALL_{CFG} &= \{ <G> | G \textrm{ is a CFG and } L(G) = \Sigma^* \} 
+\end{align*} 
+We will use a proof by contradiction to show that $EQ_{CFG}$ is undecidable.\\\\
+Suppose that $EQ_{CFG}$ were decidable by some TM, R. Then we could use R to construct a TM, S, that decides $ALL_{CFG}$. We describe S in the following paragraph.\\\\
+On input G, where G is a CFG:
+\begin{enumerate}
+    \item Run $<G, G_{\Sigma^*}>$ on R, where $L(G_{\Sigma^*}) = \Sigma^*$
+    \item \textit{accept} if R accepts; Else \textit{reject}
+\end{enumerate}
+In summary, machine S uses machine R to compare an input grammar, G, to a grammar whose language is $\Sigma^*$. The result of R's computation then determines if $L(G) = \Sigma^*$.\\\\
+However, we know from Theorem 5.13 that $ALL_{CFG}$ is undecidable. Therefore, we have a contradiction and $EQ_{CFG}$ cannot be decidable.
+
+\section*{5.4}
+
+No.\\\\
+We revisit the definition of mapping reducibility. If $A \leq_m B$, then there is a computable function $f$ where
+$$w \in A \textrm{  iff   } f(w) \in B$$
+$f$ is defined such that some Turing Machine, on input $w$, halts with the output $f(w)$ on its tape. \\\\
+However, just because the function $f(w)$ produces strings that belong to the regular language B does not nessecitate that the input strings $w \in A$ form a regular language themselves. So A does not need to be regular for B to be regular.\\\\
+For example, consider the following:
+\begin{itemize}
+\item $A = \{0^n1^n \mid n \geq 0\}$
+\item $B = \{0^n \mid n \geq 0\}$
+\item $f(x)= $ is computed by a TM M that when it reads a 1, it deletes it. M continues until the end of the input string is reached, then halts.
+\end{itemize}
+$A$ is not regular, $B$ is regular and $A \leq_m B$
+
+\section*{5.9}
+
+First we define
+\begin{align*}
+    T &= \{ <M> | M \textrm{ is a TM that accepts } w^R  \textrm{ whenever it accepts } w \}\\
+    A_{TM} &= \{ <M, w> | M \textrm{ is TM and accepts } w \} 
+\end{align*} 
+
+\begin{enumerate}
+    \item Construct a TM T that decides $A$ = $\{ \langle M \rangle \mid w^R$ is accepted if w is accepted$\}$ inside a TM S used to decide $A_{TM}$.
+    \item Inside S, construct a new TM $M_1$ from input $\langle \langle M\rangle, w \rangle$. Using input $w_1$:
+    \begin{itemize}
+        \item If $w_1 = w^R$, Accept
+        \item Else if $w_1 = w$, Run $M$ on $w_1$
+        \item Else, Reject 
+    \end{itemize}
+    \item Feed ${M_1}$ into TM T, if it accepts then $M$ must accept $w$ since T only accepts ${M}$ if both $w^R$ and $w$ are accepted and we can guarantee $w^R$ is accepted because we constructed $M_1$ to accept it.
+\end{enumerate}
+Thus we can use TM T to decide $A_{TM}$, which is undecidable, so T must also be undecidable.
+
+\section*{5.22}
+
+We will prove 
+$$
+\textrm{A is Turing-recognizable} \leftrightarrow A \leq_m A_{TM}
+$$
+
+\subsection*{forward}
+We will prove
+$$\textrm{A is Turing-recognizable} \rightarrow A \leq_m A_{TM}$$
+If A is Turing recognizable, then some TM $T_A$ recognizes it. We design a TM $T$ that writes the concatenation of a word, w, and $T_A$ on its tape. We describe the TM $T$:\\\\
+On input w:
+\begin{enumerate}
+    \item Write $<T_A, w>$ on the tape and halt
+\end{enumerate}
+The Turing machine $T$ is a computable function because on every input $w$, T will halt with just $f(w)$ on its tape. The language A is then mapping reducible to $A_{TM}$ because there is a computable function where for every $w$, $w\in A \implies f(w) \in A_{TM}$. This fulfills the mapping reduction from $A$ to $A_{TM}$.
+
+\subsection*{backward}
+We will prove
+$$A \leq_m A_{TM} \rightarrow \textrm{A is Turing-recognizable}$$
+We know from theorem 5.28 that if $A \leq_m B$ and B is Turing-recognizable, then A is Turing recognizable. $A_{TM}$ is a Turing-recognizable language, thus A must be as well.
+
+\end{document}
