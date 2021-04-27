@@ -53,7 +53,7 @@ Construct a TM S that will decide $A\varepsilon_{CFG} = \{\langle G \rangle \mid
     \item Else, reject
 \end{enumerate}
 
-\section*{4.11 (using a CFG)}
+\section*{4.11}
 
 We construct a TM I to decide $\textrm{INFINTE}_{PDA}$. \\\\
 I = ``On input M, where $P=(Q,\Sigma,\Gamma,\delta,q_0,F)$ is a PDA that recognizes $L(P)$:
@@ -67,19 +67,7 @@ I = ``On input M, where $P=(Q,\Sigma,\Gamma,\delta,q_0,F)$ is a PDA that recogni
     \end{itemize}
     \item If recursion is found \textit{accept}; Else \textit{reject}
 \end{enumerate}
-
-\section*{4.11}
-
-We construct a TM I to decide $\textrm{INFINTE}_{PDA}$. \\\\
-I = ``On input M, where $P=(Q,\Sigma,\Gamma,\delta,q_0,F)$ is a PDA that recognizes $L_P$:
-\begin{enumerate}
-    \item Let $k = |\mathscr{P}(Q \times \Gamma_\epsilon)|$
-    \item Construct DFA, D, to recognize $L_D = \{ w \;\; \bigr | \;\; |w| > k \}$
-    \item Construct DFA, M, to recognize $L_M = L_D \cap L_P$
-    \item Use the $E_{DFA}$ decider Theorem 4.4 and \textit{reject} if $L_M = \emptyset$; Else \textit{accept} if $L_M \neq \emptyset$
-\end{enumerate}
-\textbf{Required:} For a PDA to accept an infinite number of strings, there cannot exist an upper limit on the length of the strings the PDA accepts, ie, it must accept strings of arbitrary length. \\\\
-Our PDA has a transition function $\delta: Q \times \Sigma_\epsilon \Gamma_\epsilon \rightarrow \mathscr{P}(Q \times \Gamma_\epsilon)$. Therefore, at any time, the PDA may be in any of $|\mathscr{P}(Q \times \Gamma_\epsilon)|$ different configurations of state and stack. We choose the integer $k$ to be this size. We build a language $L_D$ that contains all words longer than $k$. Using $L_D$, we build another language $L_M$ that contains the elements in the language recognized by our PDA $L_P$ that are longer than $k$. If the language of the PDA $L_P$ contains no words longer than k, then $L_M$ will be empty and our TM will reject. If $L_P$ contains some word longer than $k$, we accept because that word may be pumped with the pumping lemma for CFGs, meaning that the PDA will accept an infinte number of strings. 
+Since we can create a TM that decides this language, it is obviously a decideable language.
 
 \section*{5.1}
 
