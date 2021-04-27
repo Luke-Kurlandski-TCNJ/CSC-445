@@ -24,7 +24,7 @@ auto,semithick}}
  top=20mm,
 }
 
-\title{Homework 5\\[0.2em]\smaller{}CSC 445-01: Theory of Computation}
+\title{Homework 6\\[0.2em]\smaller{}CSC 445-01: Theory of Computation}
 \author{Matthew Mabrey, Luke Kurlandski}
 \date{\today}
 
@@ -52,6 +52,21 @@ T = ``On input G, where G is a CFG
 \begin{enumerate}
     \item Convert G to a Chomsky Normal Form G' with rules R'
     \item If the rule $S\rightarrow \epsilon$ is in R', then \textit{accept}; Else \textit{reject}.''
+\end{enumerate}
+
+\section*{4.11 (using a CFG)}
+
+We construct a TM I to decide $\textrm{INFINTE}_{PDA}$. \\\\
+I = ``On input M, where $P=(Q,\Sigma,\Gamma,\delta,q_0,F)$ is a PDA that recognizes $L(P)$:
+\begin{enumerate}
+    \item Construct a Context Free Grammar for $L(P)$, $G'=(V',\Sigma',R',S')$
+    \item Convert $G'$ into Chomsky Normal Form grammar, $G=(V,\Sigma,R,S)$
+    \item Conduct a search for recursion in the rules, $R$
+    \begin{itemize}
+    	\item Use a BFS to prevent ``getting stuck", as opposed to DFS
+	\item For some arbitrary non terminal $A \in V$, if the derivation $A \rightarrow uAv$ exists, for $u,v \in \{ V \cup \Sigma \}^*$, then recursion exists in the rules
+    \end{itemize}
+    \item If recursion is found \textit{accept}; Else \textit{reject}
 \end{enumerate}
 
 \section*{4.11 (shaky)}
